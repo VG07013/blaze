@@ -40,16 +40,18 @@ struct LayeredFlame: View {
 
     var body: some View {
         GeometryReader { geo in
-            let w = geo.size.width
-            let h = geo.size.height
-            let flicker = 1.0 + 0.035 * sin(phase * 2.1) + 0.02 * sin(phase * 3.7 + 1.3)
+            let w: CGFloat = geo.size.width
+            let h: CGFloat = geo.size.height
+            let wobble: Double = 0.035 * sin(phase * 2.1) + 0.02 * sin(phase * 3.7 + 1.3)
+            let flicker: CGFloat = 1.0 + CGFloat(wobble)
+            let coreColors: [Color] = [Color.white.opacity(0.9), colors.last ?? .yellow]
             ZStack {
                 FlameShape()
                     .fill(BlazeTheme.flameFill(colors))
                     .frame(width: w, height: h * flicker)
                     .opacity(dimmed ? 0.55 : 1.0)
                 FlameShape()
-                    .fill(BlazeTheme.flameFill([Color.white.opacity(0.9), colors.last ?? .yellow]))
+                    .fill(BlazeTheme.flameFill(coreColors))
                     .frame(width: w * 0.48, height: h * 0.52 * flicker)
                     .offset(y: h * 0.30)
                     .opacity(dimmed ? 0.35 : 0.85)

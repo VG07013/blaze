@@ -63,18 +63,19 @@ struct StretchTimerView: View {
 
     private func runningView(endDate: Date) -> some View {
         TimelineView(.periodic(from: .now, by: 0.5)) { timeline in
-            let remaining = endDate.timeIntervalSince(timeline.date)
+            let remaining: Double = endDate.timeIntervalSince(timeline.date)
             if remaining <= 0 {
                 Color.clear
                     .frame(height: 1)
                     .onAppear { finish() }
             } else {
+                let fractionDone: Double = 1.0 - remaining / Double(totalSeconds)
                 VStack(spacing: 16) {
                     ZStack {
                         Circle()
                             .stroke(BlazeTheme.ash.opacity(0.25), lineWidth: 12)
                         Circle()
-                            .trim(from: 0, to: 1.0 - remaining / Double(totalSeconds))
+                            .trim(from: 0, to: fractionDone)
                             .stroke(BlazeTheme.flameGradient,
                                     style: StrokeStyle(lineWidth: 12, lineCap: .round))
                             .rotationEffect(.degrees(-90))
