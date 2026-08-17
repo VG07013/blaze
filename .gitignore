@@ -1,0 +1,9 @@
+# Xcode
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+DerivedData/
+build/
+.DS_Store
+*.moved-aside
+*.swp
