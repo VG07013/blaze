@@ -56,12 +56,7 @@ struct QuestCardView: View {
             .padding(18)
             .background(
                 RoundedRectangle(cornerRadius: 20, style: .continuous)
-                    .fill(quest.completed
-                          ? AnyShapeStyle(LinearGradient(
-                                colors: [BlazeTheme.flameOrange.opacity(0.22),
-                                         BlazeTheme.flameGold.opacity(0.10)],
-                                startPoint: .leading, endPoint: .trailing))
-                          : AnyShapeStyle(Color.clear))
+                    .fill(cardFill)
             )
             .blazeCard()
             .overlay(
@@ -79,6 +74,16 @@ struct QuestCardView: View {
                 }
             }
         }
+    }
+
+    private var cardFill: AnyShapeStyle {
+        guard quest.completed else { return AnyShapeStyle(Color.clear) }
+        let gradient = LinearGradient(
+            colors: [BlazeTheme.flameOrange.opacity(0.22),
+                     BlazeTheme.flameGold.opacity(0.10)],
+            startPoint: .leading, endPoint: .trailing
+        )
+        return AnyShapeStyle(gradient)
     }
 
     private var iconBadge: some View {
